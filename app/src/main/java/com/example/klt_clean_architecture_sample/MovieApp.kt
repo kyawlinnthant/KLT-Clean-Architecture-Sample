@@ -11,6 +11,6 @@ import timber.log.Timber
 class MovieApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) Timber.plant()
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 }

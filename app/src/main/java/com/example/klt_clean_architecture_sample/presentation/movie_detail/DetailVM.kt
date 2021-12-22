@@ -1,23 +1,27 @@
 package com.example.klt_clean_architecture_sample.presentation.movie_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.klt_clean_architecture_sample.common.Resource
 import com.example.klt_clean_architecture_sample.data.dto.detail.toViewData
 import com.example.klt_clean_architecture_sample.domain.model.DetailMovie
 import com.example.klt_clean_architecture_sample.domain.usecase.movie_detail.MovieDetailUseCase
+import com.example.klt_clean_architecture_sample.domain.usecase.movie_detail.MovieDetailUseCaseImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@HiltViewModel
 class DetailVM @Inject constructor(
     private val detailUseCase: MovieDetailUseCase
 ) : ViewModel() {
 
-    private val _movie = MutableLiveData<Resource<DetailMovie>>()
-    val movie: LiveData<Resource<DetailMovie>> get() = _movie
+    private val _movie = MutableStateFlow<Resource<DetailMovie>>(Resource.loading())
+    val movie get() = _movie.asStateFlow()
 
-    private fun getMovie(id: Int) {
+
+    fun getMovie(id: Int) {
         detailUseCase(id, "en").onEach { result ->
             when (result.status) {
                 Resource.Status.SUCCESS -> {

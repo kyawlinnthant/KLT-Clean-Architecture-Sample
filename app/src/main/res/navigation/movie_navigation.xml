@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_navigation"
+    app:startDestination="@id/dest_list">
+
+    <fragment
+        tools:layout="@layout/fragment_list"
+        android:id="@+id/dest_list"
+        android:name="com.example.klt_clean_architecture_sample.presentation.movie_list.ListFragment"
+        android:label="Popular Movie List">
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/dest_detail" >
+            <argument
+                android:name="movieId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_detail"
+        android:id="@+id/dest_detail"
+        android:name="com.example.klt_clean_architecture_sample.presentation.movie_detail.DetailFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+</navigation>

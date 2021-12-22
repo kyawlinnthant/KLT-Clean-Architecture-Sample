@@ -1,4 +1,4 @@
-package com.example.klt_clean_architecture_sample.data.base
+package com.example.klt_clean_architecture_sample.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,24 +7,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-typealias InflateFragment<T> = (LayoutInflater,ViewGroup?,Boolean)->T
+typealias InflateFragment<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<VB : ViewBinding>(
+open class BaseFragment<VB : ViewBinding>(
     private val inflate: InflateFragment<VB>
 ) : Fragment() {
-    private var _binding : ViewBinding? = null
+    private var _binding: VB? = null
     val binding get() = _binding!!
 
-    abstract fun init()
-    abstract fun setupView()
-    abstract fun observe()
+    open fun init() {}
+    open fun setupView() {}
+    open fun observe() {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflate.invoke(inflater,container,false)
+        _binding = inflate.invoke(inflater, container, false)
         return binding.root
     }
 
