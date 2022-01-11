@@ -2,7 +2,7 @@ package com.example.klt_clean_architecture_sample.domain.usecase.movie_list
 
 import com.example.klt_clean_architecture_sample.common.BaseDataSource
 import com.example.klt_clean_architecture_sample.common.Resource
-import com.example.klt_clean_architecture_sample.data.dto.list.MovieDto
+import com.example.klt_clean_architecture_sample.data.dto.list.ListDTO
 import com.example.klt_clean_architecture_sample.di.QualifierModule
 import com.example.klt_clean_architecture_sample.domain.repo.MovieRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +16,7 @@ class MovieListUseCaseImpl @Inject constructor(
     @QualifierModule.Io private val io: CoroutineDispatcher
 ) : BaseDataSource(),MovieListUseCase {
 
-    override fun invoke(page : Int): Flow<Resource<List<MovieDto>>> {
+    override fun invoke(page : Int): Flow<Resource<List<ListDTO>>> {
         return flow {
             emit(
                 safeApiCall {

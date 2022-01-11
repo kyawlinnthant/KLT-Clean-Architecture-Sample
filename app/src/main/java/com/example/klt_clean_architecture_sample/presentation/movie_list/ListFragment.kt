@@ -1,5 +1,8 @@
 package com.example.klt_clean_architecture_sample.presentation.movie_list
 
+import android.opengl.Visibility
+import android.util.Log
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,19 +33,30 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             viewModel.movies.collectLatest {
                 when (it.status) {
                     Resource.Status.LOADING -> {
-                        binding.recycler.isVisible = false
+                        Log.d("reach001",it.data?.size.toString())
+                        binding.recycler.visibility = View.GONE
+                        binding.loading.retryLayout.visibility = View.VISIBLE
+                        binding.loading.progress.visibility = View.VISIBLE
 
                     }
                     Resource.Status.ERROR -> {
-                        binding.loading.progress.isVisible = false
+                        Log.d("reach002",it.data?.size.toString())
+                        binding.recycler.visibility = View.GONE
+                        binding.loading.retryLayout.visibility = View.VISIBLE
+                        binding.loading.progress.visibility = View.GONE
+                        binding.loading.errorText.visibility = View.VISIBLE
+
+
                         binding.loading.errorText.text = it.message
 
                     }
                     Resource.Status.SUCCESS -> {
-                        binding.loading.progress.isVisible = false
-                        binding.loading.errorText.isVisible = false
-                        binding.loading.retryButton.isVisible = false
-                        binding.recycler.isVisible = true
+                        Log.d("reach003",it.data?.size.toString())
+                        binding.recycler.visibility = View.VISIBLE
+                        binding.loading.retryLayout.visibility = View.GONE
+                        binding.loading.progress.visibility = View.GONE
+                        binding.loading.errorText.visibility = View.GONE
+
                         adapter.submitList(it.data)
                     }
                 }

@@ -1,14 +1,15 @@
 package com.example.klt_clean_architecture_sample.presentation.movie_detail
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.klt_clean_architecture_sample.common.Resource
 import com.example.klt_clean_architecture_sample.data.dto.detail.toViewData
-import com.example.klt_clean_architecture_sample.domain.model.DetailMovie
+import com.example.klt_clean_architecture_sample.domain.model.Movie
 import com.example.klt_clean_architecture_sample.domain.usecase.movie_detail.MovieDetailUseCase
-import com.example.klt_clean_architecture_sample.domain.usecase.movie_detail.MovieDetailUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class DetailVM @Inject constructor(
     private val detailUseCase: MovieDetailUseCase
 ) : ViewModel() {
 
-    private val _movie = MutableStateFlow<Resource<DetailMovie>>(Resource.loading())
+    private val _movie = MutableStateFlow<Resource<Movie>>(Resource.loading())
     val movie get() = _movie.asStateFlow()
 
 
@@ -35,7 +36,7 @@ class DetailVM @Inject constructor(
                     _movie.value = Resource.loading(null)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 }
 

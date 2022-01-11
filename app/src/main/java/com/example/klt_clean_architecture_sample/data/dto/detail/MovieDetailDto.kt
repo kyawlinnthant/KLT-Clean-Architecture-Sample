@@ -1,9 +1,7 @@
 package com.example.klt_clean_architecture_sample.data.dto.detail
 
 import com.example.klt_clean_architecture_sample.common.Endpoint
-import com.example.klt_clean_architecture_sample.data.dto.list.MovieDto
-import com.example.klt_clean_architecture_sample.domain.model.DetailMovie
-import com.example.klt_clean_architecture_sample.domain.model.ListMovie
+import com.example.klt_clean_architecture_sample.domain.model.Movie
 
 data class MovieDetailDto(
     val adult: Boolean,
@@ -34,8 +32,8 @@ data class MovieDetailDto(
 )
 
 
-fun MovieDetailDto.toViewData(): DetailMovie {
-    return DetailMovie(
+fun MovieDetailDto.toViewData(): Movie {
+    return Movie(
         id = id,
         image = Endpoint.IMAGE_URL + backdrop_path,
         title = original_title,
